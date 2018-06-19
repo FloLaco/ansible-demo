@@ -1,0 +1,6 @@
+- name: Get Facts Sample
+  hosts: all
+  tasks:
+    - name: Hello Message
+      eos_facts:
+        gather_subset: all
