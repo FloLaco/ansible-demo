@@ -1,5 +1,6 @@
 - name: Get Facts Sample
   hosts: all
+  gather_facts: no
   tasks:
     - name: Hello Message
       eos_facts:
