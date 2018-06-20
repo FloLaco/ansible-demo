@@ -3,6 +3,6 @@
   connection: local
   hosts: all
   tasks:
-    - name: Hello Message
+    - name: Get Facts
       eos_facts:
         gather_subset: all
