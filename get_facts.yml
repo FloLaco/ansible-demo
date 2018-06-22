@@ -1,3 +1,4 @@
+---
 - name: Get Facts Sample
   gather_facts: no
   connection: local
