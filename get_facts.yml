@@ -4,6 +4,6 @@
   connection: local
   hosts: all
   tasks:
-    - name: Get Facts
+    - name: Get Facts Task
       eos_facts:
         gather_subset: all
