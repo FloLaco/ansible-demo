@@ -26,7 +26,7 @@
           - description "PROD-VLAN{{ vlan_id }}"
           - no shutdown
           - vrf member TENANT-1
-          - ip address "{{ gateway_ip }}"
+          - "ip address {{ gateway_ip }}"
           - fabric forwarding mode anycast-gateway
         parents: "interface Vlan{{ vlan_id }}"
         provider: "{{ nxos_provider }}"
