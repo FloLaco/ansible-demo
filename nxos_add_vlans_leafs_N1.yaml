@@ -37,7 +37,7 @@
         interface: nve1
         vni: "{{ vni_id }}"
         multicast_group: "{{ mcast_group }}"
-        supress_arp: true
+        suppress_arp: true
         provider: "{{ nxos_provider }}"
 
 
