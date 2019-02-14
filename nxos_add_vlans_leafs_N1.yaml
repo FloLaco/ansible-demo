@@ -1,0 +1,51 @@
+---
+- name: Vxlan VLAN & VNI Provisioning
+  hosts: all
+  gather_facts: no
+
+  vars:
+    nxos_provider:
+      username: "{{ un }}"
+      password: "{{ pwd }}"
+      transport: cli
+      host: "{{ ansible_host }}"
+
+  tasks:
+
+    - name: CREATE VLANS and MAP TO VNI-SEGMENT
+      nxos_vlan:
+        vlan_id: "{{ vlan_id }}"
+        name: "{{ vlan_name }} "
+        mapped_vni: "{{ vni_id }}"
+        provider: "{{ nxos_provider }}"
+
+
+    - name: Add SVI- Distributed gateway for vlan-XXX
+      nxos_config:
+        lines:
+          - description PROD-VLAN100
+          - no shutdown
+          - vrf member TENANT-1
+          - ip address "{{ gateway_ip }}"
+          - fabric forwarding mode anycast-gateway
+        parents: interface Vlan"{{ vlan_id }}"
+        provider: "{{ nxos_provider }}"
+
+
+    - name: Add L2VNI VNI_ID to Overlay
+      nxos_vxlan_vtep_vni:
+        interface: nve1
+        vni: "{{ vni_id }}"
+        multicast_group: "{{ mcast_group }}"
+        supress_arp: true
+        provider: "{{ nxos_provider }}"
+
+
+
+    - name: Add L2VNI VNI_ID to EVPN
+      nxos_evpn_vni:
+        vni: "{{ vni_id }}"
+        route_distinguisher: auto
+        route_target_both: auto
+        provider: "{{ nxos_provider }}"
+
