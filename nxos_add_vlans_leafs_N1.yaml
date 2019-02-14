@@ -20,7 +20,7 @@
         provider: "{{ nxos_provider }}"
 
 
-    - name: Add SVI- Distributed gateway for vlan-XXX
+    - name: Add SVI- Distributed gateway for vlan-{{ vlan_id }}
       nxos_config:
         lines:
           - description "PROD-VLAN{{ vlan_id }}"
