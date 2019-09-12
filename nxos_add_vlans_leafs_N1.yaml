@@ -2,6 +2,7 @@
 - name: Vxlan VLAN & VNI Provisioning
   hosts: leafs
   gather_facts: no
+  connection: local
 
   vars:
     nxos_provider:
