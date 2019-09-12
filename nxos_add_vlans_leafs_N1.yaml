@@ -5,8 +5,8 @@
 
   vars:
     nxos_provider:
-      username: "{{ un }}"
-      password: "{{ pwd }}"
+#      username: "{{ un }}"
+#      password: "{{ pwd }}"
       transport: cli
       host: "{{ ansible_hostname }}"
 
