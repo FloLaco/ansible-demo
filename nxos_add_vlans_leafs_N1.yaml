@@ -8,7 +8,8 @@
     nxos_provider:
 #      username: "{{ un }}"
 #      password: "{{ pwd }}"
-      transport: cli
+      transport: cli      
+      authorize: no
       host: "{{ ansible_hostname }}"
 
   tasks:
