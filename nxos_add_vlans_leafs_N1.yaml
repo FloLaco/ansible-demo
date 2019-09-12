@@ -1,6 +1,6 @@
 ---
 - name: Vxlan VLAN & VNI Provisioning
-  hosts: all
+  hosts: leafs
   gather_facts: no
 
   vars:
@@ -8,7 +8,7 @@
       username: "{{ un }}"
       password: "{{ pwd }}"
       transport: cli
-      host: "{{ ansible_host }}"
+      host: "{{ ansible_hostname }}"
 
   tasks:
 
