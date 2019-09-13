@@ -1,0 +1,51 @@
+---
+- name: Leaf Switch - Port Provisioning
+  hosts: "{{ target | default('no_hosts')}}"
+  gather_facts: no
+  connection: local
+
+  vars:
+    nxos_provider:
+      transport: cli
+      host: "{{ ansible_host }}"
+
+#  vars_prompt:
+#    - name: interface
+#      prompt: "What is the interface to configure (EthX/Y) ?"
+#      private: no
+#    - name: description
+#      prompt: "What is the description interface ?"
+#      private: no
+#    - name: access
+#      prompt: "Does the interface is access type (yes/no) ?"
+#      private: no
+#    - name: vlans
+#      prompt: "What is/are the vlan(s) ?"
+#      private: no
+
+  tasks:
+
+    - name: Configure Trunk Interface to Server on Leaf Switch
+      nxos_config:
+        lines:
+          - description {{ description }}
+          - no shutdown
+          - switchport mode trunk
+          - switchport trunk allowed vlan {{ vlans }}
+        parents: interface {{ interface }}
+        provider: "{{ nxos_provider }}"
+      when: access == "no"
+
+    - name: Configure Access-port to Server on Leaf Switch                  
+      nxos_config:
+        lines:
+          - description {{ description }}    
+          - no shutdown
+          - switchport mode access
+          - switchport access vlan {{ vlans }}
+        parents: interface {{ interface }}
+        provider: "{{ nxos_provider }}"
+      when: access == "yes"
+
+
+
