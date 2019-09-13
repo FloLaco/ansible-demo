@@ -10,7 +10,7 @@
 #      password: "{{ pwd }}"
       transport: cli      
       authorize: no
-      host: "{{ ansible_hostname }}"
+      host: "{{ ansible_host }}"
 
   tasks:
 
