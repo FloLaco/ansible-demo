@@ -1,0 +1,36 @@
+---
+-
+  connection: local
+  gather_facts: false
+  hosts: leafs
+  connection: local
+
+  vars:
+    nxos_provider:
+      transport: cli
+      authorize: no
+      host: "{{ ansible_host }}"
+
+  tasks:
+
+    - name : Find mac address on the vxlan fabric
+      nxos_command:
+        commands:
+#          - show l2route evpn mac-ip all
+          - show l2route evpn mac-ip all | g {{ mac }} | g Local
+#          - show l2route evpn mac all
+          - show l2route evpn mac all | g {{ mac }} | g Local
+#        waitfor:
+#          - result[0] contains 'Local'
+        #host: "{{ ansible_host }}"
+        provider: "{{ nxos_provider }}"
+      register: result
+
+    - name: print results
+      debug:
+        var: result.stdout_lines
+
+
+
+
+
