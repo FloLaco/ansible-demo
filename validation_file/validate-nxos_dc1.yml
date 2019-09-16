@@ -1,0 +1,55 @@
+---
+- get_facts:
+    os_version: 7.0(3)I7(3)
+
+- get_vni:
+    10000: 
+      multicast_group: 238.0.0.10
+      vlan: 10
+    10101: 
+      multicast_group: 239.0.0.101
+      vlan: 101
+    20000: 
+      multicast_group: 238.0.0.10
+      vlan: 20
+    30099: 
+      vrf: TENANT-1
+
+- get_interfaces_ip:
+    Vlan10:
+      ipv4:
+        192.168.211.1:
+          prefix_length: 24
+    Vlan20:
+      ipv4:
+        192.168.212.1:
+          prefix_length: 24
+    
+
+- get_bgp_neighbors:
+    global:
+      peers:
+        192.168.1.1:
+          address_family:
+            l2vpn:
+              received_prefixes: '>=0'
+          is_up: true
+        192.168.1.2:
+          address_family:
+            l2vpn:
+              received_prefixes: '>=0'
+          is_up: true
+
+# - get_ntp_stats:
+#     list:
+#       - remote:
+#           10.55.199.188
+#       - remote:
+#           10.55.199.189
+
+- get_ospf_neighbors:
+    "1":
+      global:
+        peers:
+         192.168.1.1: {}
+         192.168.1.2: {}

@@ -1,0 +1,33 @@
+---
+- name: Validate switch configuration
+  hosts: leafs
+  connection: local
+  gather_facts: no
+
+  vars:
+    val_dir: "{{ playbook_dir }}/validation_file"
+
+  tasks:
+  - name: Use Napalm to automatically validate infos
+    napalm_validate:
+      hostname: "{{ ansible_host }}"
+      username: "{{ ansible_username }}"
+      password: "{{ ansible_password }}"
+      dev_os: nxos
+      #validation_file: "{{ val_dir }}/validate-nxos_{{ hostvars[inventory_hostname].group_names[1] }}.yml"
+      validation_file: "{{ val_dir }}/validate-nxos_{{ site }}.yml"
+      optional_args:
+        port: 80
+        transport: http
+      #   eos_transport: https
+    register: val_res
+    ignore_errors: yes
+
+#  - name: Display full compliance report
+#    debug:
+#      var: val_res.compliance_report
+
+  - name: Compliance check failed
+    fail:
+      msg: "Non-compliant state encountered. Refer to the full report."
+    when: not val_res.compliance_report.complies
