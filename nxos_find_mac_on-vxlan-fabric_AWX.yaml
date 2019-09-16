@@ -3,7 +3,6 @@
   connection: local
   gather_facts: false
   hosts: leafs
-  connection: local
 
   vars:
     nxos_provider:
